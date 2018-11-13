@@ -191,11 +191,44 @@ public class Game extends Pane {
             getChildren().add(card);
         });*/
 
-        for (int i = 0; i < deck.size(); i++) {
+        for (int i = 0; i < 24; i++) {
             stockPile.addCard(deck.get(i));
             addMouseEventHandlers(deck.get(i));
             getChildren().add(deck.get(i));
         }
+
+        int start = 24;
+        for (int tableauIndex = 0; tableauIndex < tableauPiles.size(); tableauIndex++) {
+            for (int i = start; i < start+tableauIndex+1; i++) {
+                tableauPiles.get(tableauIndex).addCard(deck.get(i));
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+
+            }
+            start += tableauIndex+1;
+        }
+
+        /*for (int tableauIndex = 1; tableauIndex < tableauPiles.size(); tableauIndex++) {
+            for (int i = start; i < start+tableauIndex+1; i++) {
+                tableauPiles.get(tableauIndex).addCard(deck.get(i));
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+
+            }
+            start += tableauIndex+1;
+        }
+
+        for (int tableauIndex = 2; tableauIndex < tableauPiles.size(); tableauIndex++) {
+            for (int i = start; i < start+tableauIndex+1; i++) {
+                tableauPiles.get(tableauIndex).addCard(deck.get(i));
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+
+            }
+            start += tableauIndex+1;
+        }*/
+
+
     }
 
     public void setTableBackground(Image tableBackground) {
