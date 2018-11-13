@@ -182,14 +182,25 @@ public class Game extends Pane {
     }
 
     public void dealCards() {
-        Iterator<Card> deckIterator = deck.iterator();
-        //TODO
-        deckIterator.forEachRemaining(card -> {
-            stockPile.addCard(card);
-            addMouseEventHandlers(card);
-            getChildren().add(card);
-        });
+        //TODO - itt kell megírni hogy alapból kerüljenek cardok a tableau pile-ba?
 
+        for (int i = 0; i < 24; i++) {
+            stockPile.addCard(deck.get(i));
+            addMouseEventHandlers(deck.get(i));
+            getChildren().add(deck.get(i));
+        }
+
+        int start = 24;
+        for (int tableauIndex = 0; tableauIndex < tableauPiles.size(); tableauIndex++) {
+            for (int i = start; i < start+tableauIndex+1; i++) {
+                tableauPiles.get(tableauIndex).addCard(deck.get(i));
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+
+            }
+            tableauPiles.get(tableauIndex).getTopCard().flip();
+            start += tableauIndex+1;
+        }
     }
 
     public void setTableBackground(Image tableBackground) {
