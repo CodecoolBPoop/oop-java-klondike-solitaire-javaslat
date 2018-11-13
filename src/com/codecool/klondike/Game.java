@@ -14,6 +14,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -88,13 +89,21 @@ public class Game extends Pane {
     };
 
     public boolean isGameWon() {
-
+        for(Pile pile : foundationPiles){
+            if(pile.getTopCard().equals(null)){
+                return false;
+            }else if(pile.getTopCard().getRank() != Card.Rank.KING){
+                return false;
+            }
+            return true;
+        }
         //TODO
         return false;
     }
 
     public Game() {
         deck = Card.createNewDeck();
+        Collections.shuffle(deck);
         initPiles();
         dealCards();
     }
