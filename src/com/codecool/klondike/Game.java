@@ -88,7 +88,14 @@ public class Game extends Pane {
     };
 
     public boolean isGameWon() {
-
+        for(Pile pile : foundationPiles){
+            if(pile.getTopCard().equals(null)){
+                return false;
+            }else if(pile.getTopCard().getRank() != Card.Rank.KING){
+                return false;
+            }
+            return true;
+        }
         //TODO
         return false;
     }
