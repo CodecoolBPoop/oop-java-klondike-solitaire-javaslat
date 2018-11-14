@@ -58,7 +58,7 @@ public class MouseUtil {
                     targetY + ((destPile.isEmpty() ? i : i + 1) * destCardGap), Duration.millis(150),
                     e -> {
                         currentCard.moveToPile(destPile);
-                        if (sourcePile.getPileType().equals(Pile.PileType.TABLEAU)) {
+                        if (sourcePile.getPileType().equals(Pile.PileType.TABLEAU) && !sourcePile.isEmpty()) {
                             sourcePile.getTopCard().flip();
                         }
                         currentCard.getDropShadow().setRadius(2);
