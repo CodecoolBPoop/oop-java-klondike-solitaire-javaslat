@@ -155,12 +155,21 @@ public class Game extends Pane {
             else if(pileType.equals(Pile.PileType.FOUNDATION) ){
                 if(card.getSuit().equals(destPile.getTopCard().getSuit())){
                     Card.Rank topCardRank = destPile.getTopCard().getRank();
-                    Card.Rank cardRank = card.getRank();
-                    return topCardRank.getRankCode() == cardRank.getRankCode() - 1;
-
-
+                    Card.Rank currentCardRank = card.getRank();
+                    return topCardRank.getRankCode() == currentCardRank.getRankCode() - 1;
                 }
             }
+        } else if(pileType.equals(Pile.PileType.TABLEAU)) {
+            if (destPile.isEmpty() && card.getRank().equals(Card.Rank.KING)) {
+                return true;
+            } else if (destPile.isEmpty() && card.getRank() != Card.Rank.KING) {
+                return false;
+            } else if (Card.isOppositeColor(destPile.getTopCard(),card)) {
+                Card.Rank topCardRank = destPile.getTopCard().getRank();
+                Card.Rank currentCardRank = card.getRank();
+                return topCardRank.getRankCode() == currentCardRank.getRankCode() + 1;
+            }
+
         }
         //TODO
         return false;
