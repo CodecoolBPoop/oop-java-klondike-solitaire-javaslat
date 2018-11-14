@@ -57,7 +57,7 @@ public class Game extends Pane {
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         Card card = (Card) e.getSource();
-        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK) {
+        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK && card.getContainingPile().getTopCard().equals(card)) {
             card.moveToPile(discardPile);
             card.flip();
             card.setMouseTransparent(false);
@@ -247,6 +247,7 @@ public class Game extends Pane {
             getChildren().add(deck.get(i));
         }
 
+        
         int start = 24;
         for (int tableauIndex = 0; tableauIndex < tableauPiles.size(); tableauIndex++) {
             for (int i = start; i < start+tableauIndex+1; i++) {
