@@ -59,7 +59,9 @@ public class MouseUtil {
                     e -> {
                         currentCard.moveToPile(destPile);
                         if (sourcePile.getPileType().equals(Pile.PileType.TABLEAU) && !sourcePile.isEmpty()) {
-                            sourcePile.getTopCard().flip();
+                            if(sourcePile.getTopCard().isFaceDown()) {
+                                sourcePile.getTopCard().flip();
+                            }
                         }
                         currentCard.getDropShadow().setRadius(2);
                         currentCard.getDropShadow().setOffsetX(0);
