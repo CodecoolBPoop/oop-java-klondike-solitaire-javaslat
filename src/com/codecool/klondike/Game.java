@@ -13,6 +13,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +53,14 @@ public class Game extends Pane {
         }
         return result;
     }
+    private void showAlertWithHeaderText() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Congratulation");
+        alert.setHeaderText("You WON");
+        alert.setContentText("YoU WON");
 
+        alert.showAndWait();
+    }
 
 
 
@@ -123,11 +132,20 @@ public class Game extends Pane {
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
             draggedCards.clear();
+            if(isGameWon()){
+                showAlertWithHeaderText();
+                System.exit(0);
+
+            }
         }
     };
 
     public boolean isGameWon() {
+
         for(Pile pile : foundationPiles){
+            if(pile.isEmpty()){
+                return false;
+            }
             if (!pile.getTopCard().getRank().equals(Card.Rank.KING)){
                 return false;
                 }
@@ -167,7 +185,7 @@ public class Game extends Pane {
             return false;
         }
         Pile.PileType pileType = destPile.getPileType();
-        if(pileType.equals(Pile.PileType.FOUNDATION)){
+        if(pileType.equals(Pile.PileType.FOUNDATION) && draggedCards.size() == 1){
             if(destPile.isEmpty() && card.getRank().equals(Card.Rank.ACE)){
                 return true;
             }else if(destPile.isEmpty() && card.getRank() != Card.Rank.ACE){
@@ -180,7 +198,8 @@ public class Game extends Pane {
                     return topCardRank.getRankCode() == currentCardRank.getRankCode() - 1;
                 }
             }
-        } else if(pileType.equals(Pile.PileType.TABLEAU)) {
+        }
+        else if(pileType.equals(Pile.PileType.TABLEAU)) {
             if (destPile.isEmpty() && card.getRank().equals(Card.Rank.KING)) {
                 return true;
             } else if (destPile.isEmpty() && card.getRank() != Card.Rank.KING) {
@@ -202,6 +221,7 @@ public class Game extends Pane {
                     isOverPile(card, pile) &&
                     isMoveValid(card, pile))
                 result = pile;
+
         }
         return result;
     }
