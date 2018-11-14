@@ -78,8 +78,7 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+         return !card1.suit.getColor().equals(card2.suit.getColor());
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
@@ -122,11 +121,21 @@ public class Card extends ImageView {
             }
         }
     }
-    public enum Suit{
-        HEARTS,
-        DIAMONDS,
-        SPADES,
-        CLUBS
+    public enum Suit {
+        HEARTS ("red"),
+        DIAMONDS ("red"),
+        SPADES ("black"),
+        CLUBS ("black");
+
+        private String color;
+
+        public String getColor() {
+            return color;
+        }
+
+        Suit(String color) {
+            this.color = color;
+        }
     }
     public enum Rank{
         ACE(1),
