@@ -83,7 +83,16 @@ public class Game extends Pane {
         double offsetY = e.getSceneY() - dragStartY;
 
         draggedCards.clear();
+        ObservableList<Card> cards = activePile.getCards();
+
         draggedCards.add(card);
+        if(activePile.getPileType().equals(Pile.PileType.TABLEAU)) {
+            for (Card card1 : cards) {
+                if (card1.getRank().getRankCode() < card.getRank().getRankCode() && !card1.isFaceDown()) {
+                    draggedCards.add(card1);
+                }
+            }
+        }
 
         card.getDropShadow().setRadius(20);
         card.getDropShadow().setOffsetX(10);
@@ -92,6 +101,11 @@ public class Game extends Pane {
         card.toFront();
         card.setTranslateX(offsetX);
         card.setTranslateY(offsetY);
+        for(Card dragCard : draggedCards){
+            dragCard.toFront();
+            dragCard.setTranslateX(offsetX);
+            dragCard.setTranslateY(offsetY);
+        }
     };
 
     private EventHandler<MouseEvent> onMouseReleasedHandler = e -> {
