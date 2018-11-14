@@ -143,6 +143,11 @@ public class Card extends ImageView {
         QUEEN(12),
         KING(13)
         ;
+
+        public int getRankCode() {
+            return rankCode;
+        }
+
         private final int rankCode;
 
          Rank(int rankCode) {

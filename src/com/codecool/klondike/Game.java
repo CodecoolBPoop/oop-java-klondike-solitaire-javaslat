@@ -134,8 +134,28 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
+        if(destPile == null){
+            return false;
+        }
+        Pile.PileType pileType = destPile.getPileType();
+        if(pileType.equals(Pile.PileType.FOUNDATION)){
+            if(destPile.isEmpty() && card.getRank().equals(Card.Rank.ACE)){
+                return true;
+            }else if(destPile.isEmpty() && card.getRank() != Card.Rank.ACE){
+                return false;
+            }
+            else if(pileType.equals(Pile.PileType.FOUNDATION) ){
+                if(card.getSuit().equals(destPile.getTopCard().getSuit())){
+                    Card.Rank topCardRank = destPile.getTopCard().getRank();
+                    Card.Rank cardRank = card.getRank();
+                    return topCardRank.getRankCode() == cardRank.getRankCode() - 1;
+
+
+                }
+            }
+        }
         //TODO
-        return true;
+        return false;
     }
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
