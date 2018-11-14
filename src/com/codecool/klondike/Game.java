@@ -110,9 +110,16 @@ public class Game extends Pane {
     };
 
     public boolean isGameWon() {
+        for(Pile pile : foundationPiles){
+            if (!pile.getTopCard().getRank().equals(Card.Rank.KING)){
+                return false;
+                }
+
+            }
+
 
         //TODO
-        return false;
+        return true;
     }
 
     public Game() {
