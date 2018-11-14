@@ -2,6 +2,7 @@ package com.codecool.klondike;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,12 +28,31 @@ public class Game extends Pane {
     private List<Pile> foundationPiles = FXCollections.observableArrayList();
     private List<Pile> tableauPiles = FXCollections.observableArrayList();
 
+
+
+
+
+
+
     private double dragStartX, dragStartY;
     private List<Card> draggedCards = FXCollections.observableArrayList();
 
     private static double STOCK_GAP = 1;
     private static double FOUNDATION_GAP = 0;
     private static double TABLEAU_GAP = 30;
+
+    private  List<Pile> addTableauToFoundation(List<Pile> firstList, List<Pile> secondList){
+        List<Pile> result = FXCollections.observableArrayList();
+        for(Pile pile : firstList){
+            result.add(pile);
+        }
+        for(Pile pile: secondList){
+            result.add(pile);
+        }
+        return result;
+    }
+
+
 
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
@@ -77,13 +98,14 @@ public class Game extends Pane {
         if (draggedCards.isEmpty())
             return;
         Card card = (Card) e.getSource();
-        Pile pile = getValidIntersectingPile(card, tableauPiles);
+        List<Pile> allPiles = addTableauToFoundation(foundationPiles,tableauPiles);
+        Pile pile = getValidIntersectingPile(card, allPiles);
         //TODO
         if (pile != null) {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+            draggedCards.clear();
         }
     };
 
