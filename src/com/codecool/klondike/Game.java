@@ -114,9 +114,7 @@ public class Game extends Pane {
             if (!pile.getTopCard().getRank().equals(Card.Rank.KING)){
                 return false;
                 }
-
             }
-
 
         //TODO
         return true;
